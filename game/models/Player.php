@@ -80,6 +80,8 @@ class Player
         $_SESSION['playerPower'] = $this->power;
         $_SESSION['playerPv'] = $this->pv;
         $_SESSION['user'] = $this->user;
+        $_SESSION['playerPositionX'] = $this->positionX;
+        $_SESSION['playerPositionY'] = $this->positionY;
     }
 
     function getPositionX()
@@ -119,7 +121,7 @@ class Player
         $this->win = $winner;
         $_SESSION['win'] = $this->win;
         if ($this->win){
-            echo "hello world";
+
             echo '<script>';
 
       echo 'window.location.href = "../views/win.php";';

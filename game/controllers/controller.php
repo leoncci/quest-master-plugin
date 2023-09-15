@@ -9,7 +9,8 @@ session_start();
 require_once '../models/Player.php';
 require_once '../models/Monster.php';
 require_once '../models/Fight.php';
-require_once '../db/connect.php';
+include '../db/connect.php';
+
 $user = "";
 if ($_SERVER["REQUEST_METHOD"] === "POST") {
 
@@ -47,20 +48,23 @@ function findChest()
     global $user;
     global $conn;
     global $player;
+    echo "<br>position x joueur ". $playerX . "<br>";
+    echo "position y joueur ". $playerY. "<br>";
+    echo "position x chest : " . $chestX. "<br>";
+    echo "position y chest : " . $chestY. "<br>";
 
+    if ($playerX === $chestX && $playerY === $chestY) {
+        echo "you win";
+        echo '<script>window.location.href = "../views/win.php";</script>';
+        exit; // Terminate the script to ensure immediate redirection
+    }
     if (isset($_GET['direction'])) {
         $direction = (int)$_GET['direction'];
         showDirection($direction);
     }
-    if ($playerX === $chestX && $playerY === $chestY) {
-        $player->setWin(true);
 
 
-        // $sql = "INSERT INTO score  (username, score) VALUES ('$user','$playerXp')";
-        // mysqli_query($conn, $sql);
-        // mysqli_close($conn);
 
-    }
 }
 
 function showDirection($direction)
@@ -95,18 +99,20 @@ if (isset($_GET['direction'])) {
             // Commencez le combat entre le joueur et le monstre
             $result = $fight->startFight($player, $monster);
 
-            // Vous pouvez traiter le résultat du combat ici, comme ajuster les points de vie du joueur et du monstre, etc.
 
-
-            // Retirez le monstre de la liste s'il a été vaincu ou autre action nécessaire
+            // Retirez le monstre de la liste s'il a été vaincu
             unset($_SESSION['monsters'][$key]);
         }
     }
 } elseif (isset($_GET['reset']) && $_GET['reset'] === 'true') {
     session_unset(); // Clear all session variables
     session_destroy(); // Destroy the session
-    session_start(); // Start a new session
-    header('Location: /game');
+    session_start();
+    ?>
+    <script type="text/javascript">
+    window.location.href = "../index.php";
+    </script>
+<?php
 }
 
 

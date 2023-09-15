@@ -17,7 +17,7 @@ class Monster
         } else {
             $this->arraySize = rand(10, 50);
             $this->generateMonsters(); // Generate monsters initially
-            $this->shuffleMonsters(); // Shuffle the monsters
+            $this->fisherYates(); // Shuffle the monsters
             $_SESSION['monsterArray'] = $this->monsterArray; // Save the shuffled array in the session
             $this->pv;
             $this->force;
@@ -51,7 +51,7 @@ class Monster
         return false;
     }
 
-    private function shuffleMonsters()
+    private function fisherYates()
     {
         // Fisher-Yates shuffle algorithm
         $count = count($this->monsterArray);

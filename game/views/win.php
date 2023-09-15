@@ -52,41 +52,42 @@
                 </form>
             </div>
         </div>
+        <div class="col-md-3 pl-5 pr-5">
+            <table class="table border">
+                <thead class="thead-dark">
+                <tr>
+                    <th>Classement</th>
+                    <th>Username</th>
+                    <th>Score</th>
+                </tr>
+                </thead>
+                <tbody>
+                <?php
+                global $wpdb;
+                $results = $wpdb->get_results("SELECT * FROM {$wpdb->prefix}questmaster ORDER BY score DESC LIMIT 10");
+                $position = 0;
+                foreach ($results as $row) {
+                    $position += 1;
+                    ?>
+                    <tr>
+                        <td><?php echo $position; ?></td>
+                        <td>
+                            <?php
+                            echo esc_html($row->username);
+                            ?>
+                        </td>
+                        <td>
+                            <?php
+                            echo esc_html($row->score);
+                            ?>
+                        </td>
 
-        <div class="row mt-4">
-            <div class="col-md-12">
-                <table class="table border">
-                    <thead class="thead-dark">
-                        <tr>
-                            <th>Classement</th>
-                            <th>Username</th>
-                            <th>Score</th>
-                        </tr>
-                    </thead>
-                    <tbody>
-                        <?php
-                        require_once "../db/connect.php";
-                        // Assuming you have established the $conn variable for database connection
-
-                        // Modify the SQL query to sort by score in descending order
-                        $results = mysqli_query($conn, "SELECT * FROM score ORDER BY score DESC LIMIT 10 ");
-
-                        $position = 0; // Initialize position outside the loop
-                        while ($row = mysqli_fetch_array($results)) {
-                            $position += 1; // Increment position
-
-                        ?>
-                            <tr>
-                                <td><?php echo $position; ?></td>
-                                <td><?php echo $row['username'] ?></td>
-                                <td><?php echo $row['score'] ?></td>
-                            </tr>
-                        <?php
-                        }
-                        ?>
-                    </tbody>
-                </table>
-            </div>
+                    </tr>
+                    <?php
+                }
+                ?>
+                </tbody>
+            </table>
         </div>
     </div>
 </body>

@@ -54,9 +54,9 @@ $chest = new Chest();
                         for ($col = 1; $col < $boardSize; $col++) {
                             echo '<div class="cell';
                             if ($player->getPositionX() === $col && $player->getPositionY() === $row) {
-                                echo ' player"><img src="../public/assets/sword_player.png">';
+                                echo ' player"><img src="../public/assets/sword_player.png"">';
                             } elseif ($chest->getPositionX() === $col && $chest->getPositionY() === $row) {
-                                echo ' chest"><img src="../public/assets/golden_treasure.png"" >';
+                                echo ' chest"><img src="../public/assets/bloquer.png"width="100%"" >';
                             } else {
                                 $isMonsterHere = false;
                                 foreach ($monster->getMonsters() as $monsterData) {
@@ -66,7 +66,7 @@ $chest = new Chest();
                                     }
                                 }
                                 if ($isMonsterHere) {
-                                    echo ' monster"><img src="../public/assets/monster.png"">';
+                                    echo ' monster"><img src="../public/assets/bloquer.png"width="100%"">';
                                 } else {
                                     echo '">';
                                 }

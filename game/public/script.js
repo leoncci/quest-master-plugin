@@ -1,9 +1,4 @@
-function redirect() {
-  console.log("es");
-  // Display the modal with the given message
-  // You can use libraries like Bootstrap or your custom modal implementation
-  alert("test"); // Replace this with your modal code
-}
+
 // script.js
 document.addEventListener("keydown", function (event) {
   let direction = null;
@@ -26,6 +21,6 @@ document.addEventListener("keydown", function (event) {
   if (direction !== null) {
     // Make an AJAX call to your controller using the direction
     window.location.href =
-      "/findthetreaser/controllers/controller.php?direction=" + direction;
+      "../controllers/controller.php?direction=" + direction;
   }
 });
