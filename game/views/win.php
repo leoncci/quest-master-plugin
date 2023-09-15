@@ -6,6 +6,20 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Lose</title>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.4.1/dist/css/bootstrap.min.css" integrity="sha384-Vkoo8x4CGsO3+Hhxv8T/Q5PaXtkKtu6ug5TOeNV6gBiFeWPGFN9MuhOf23Q9Ifjh" crossorigin="anonymous">
+    <style>
+        @font-face {
+            font-family: 'Gothic';
+            src: url('../public/assets/fonts/gothic.ttf') format('truetype');
+            /* You can also use 'woff' format for broader browser support */
+        }
+
+        .title {
+            font-family: 'Gothic', sans-serif;
+            font-weight:900;
+            font-size: 70px;
+            /* Use 'Gothic' as the font-family name */
+        }
+    </style>
 </head>
 
 <body>
@@ -25,7 +39,8 @@
     }
     ?>
     <div class="header">
-        <h1 class="text-primary" style="padding-top: 20px; text-align: center;">Find the Treasure</h1>
+        <h1 class=" title" style=" text-align: center;">Quest Master</h1>
+        <hr class="border border-dark border-2 opacity-75">
     </div>
     <div class="container">
         <hr class="border border-primary border-3 opacity-75">

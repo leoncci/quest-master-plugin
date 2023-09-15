@@ -36,7 +36,7 @@
         <div class="col-md-6">
             <div class="header">
                 <h1 class=" title" style=" text-align: center;">Quest Master</h1>
-                <hr class="border border-primary border-2 opacity-75">
+                <hr class="border border-dark border-2 opacity-75">
             </div>
 
             <form action="controllers/controller.php" method="post" class="w-50 mx-auto">
@@ -46,7 +46,7 @@
                     </div>
                     <input type="text" class="form-control" name="username" id="usernameInput">
                 </div>
-                <button type="submit" class="btn btn-primary mt-2">Commencer une partie</button>
+                <button type="submit" class="btn btn-dark mt-2">Commencer une partie</button>
             </form>
         </div>
         <div class="col-md-3 pl-5 pr-5">
