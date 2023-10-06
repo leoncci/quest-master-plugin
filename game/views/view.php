@@ -8,6 +8,8 @@ require_once '../models/Player.php';
 require_once '../models/Monster.php';
 require_once '../models/Chest.php';
 require_once '../db/connect.php';
+$path = preg_replace( '/wp-content(?!.*wp-content).*/', '', __DIR__ );
+require_once( $path . 'wp-load.php' );
 
 $monster = new Monster();
 $chest = new Chest();
@@ -141,6 +143,57 @@ $chest = new Chest();
                     <a class="btn btn-danger" href="../controllers/controller.php?reset=true">Nouvelle Partie</a>
                 </div>
             </div>
+            <!-- Button to trigger the modal -->
+            <button type="button" class="btn btn-primary" data-toggle="modal" data-target="#itemModal">
+                Show Items
+            </button>
+            <!-- Modal -->
+            <div class="modal fade" id="itemModal" tabindex="-1" role="dialog" aria-labelledby="itemModalLabel" aria-hidden="true">
+                <div class="modal-dialog" role="document">
+                    <div class="modal-content">
+                        <div class="modal-header">
+                            <h5 class="modal-title text-center" id="itemModalLabel">Munissez vous d'une arme</h5>
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                        </div>
+                        <div class="modal-body">
+                            <!-- Item cards go here -->
+                            <div class="card-deck">
+                                <?php
+                                global $wpdb;
+                                $table_name = $wpdb->prefix . 'shop';
+                                $items = $wpdb->get_results("SELECT * FROM $table_name");
+
+                                if (!empty($items)) {
+                                    foreach ($items as $item) {
+                                        echo '<div class="card">';
+                                        echo '<div class="card-body">';
+                                        echo '<h3 class="card-title">'.$item->name. '</h3>';
+                                        echo '<p class="card-text">Puissance: ' . $item->power . '</p>';
+                                        echo '<p class="card-text">Vie: ' . $item->health . '</p>';
+                                        echo '<p class="card-text">Prix: $' . $item->price . '</p>';
+                                        echo '<button class="btn btn-primary btn-buy" data-item-id="<?php echo $item->id; ?>" data-item-power="<?php echo $item->power; ?>" data-item-health="<?php echo $item->health; ?>" data-item-price="<?php echo $item->price; ?>">Buy</button>
+';
+                                        echo '</div>';
+                                        echo '</div>';
+                                    }
+                                } else {
+                                    echo '<p>No items available in the shop.</p>';
+                                }
+                                ?>
+                            </div>
+                        </div>
+
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+
+
+        </div>
 
         </div>
     </div>
@@ -162,7 +215,9 @@ $chest = new Chest();
     <?php ?>
 
     <script src="../public/script.js"></script>
-
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js" integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/popper.js@1.14.7/dist/umd/popper.min.js" integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1" crossorigin="anonymous"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@4.3.1/dist/js/bootstrap.min.js" integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM" crossorigin="anonymous"></script>
     <div class="row">
 
     </div>

@@ -22,7 +22,8 @@ function create_questmaster_table_on_activation() {
     $sql = "CREATE TABLE $table_name (
         id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         username varchar(255) NOT NULL,
-        score int(11) NOT NULL
+        score int(11) NOT NULL,
+      
     ) $charset_collate;";
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -38,7 +39,8 @@ function create_shop_table_on_activation() {
         id int(11) NOT NULL AUTO_INCREMENT PRIMARY KEY,
         name varchar(50) NOT NULL,
         price int(11) NOT NULL,
-        power int(11) NOT NULL
+        power int(11) NOT NULL,
+        health  int(11) NOT NULL
     ) $charset_collate;";
 
     require_once(ABSPATH . 'wp-admin/includes/upgrade.php');
@@ -88,65 +90,70 @@ function my_simple_plugin_documentation_page() {
 // Callback function for the shop page
 function my_simple_plugin_shop_page() {
     if (isset($_POST['submit_weapon'])) {
-        // Handle form submission and insert data into the shop table
-        if (isset($_POST['submit_weapon'])) {
-            // Handle form submission and insert data into the shop table
-            if (isset($_POST['name']) && isset($_POST['power']) && isset($_POST['price'])) {
-                global $wpdb;
-                $table_name = $wpdb->prefix . 'shop';
+        if (isset($_POST['name']) && isset($_POST['power']) && isset($_POST['price']) && isset($_POST['health'])) {
+            global $wpdb;
+            $table_name = $wpdb->prefix . 'shop';
 
-                $name = sanitize_text_field($_POST['name']);  // Sanitize the input
-                $power = intval($_POST['power']);
-                $price = intval($_POST['price']);
+            $name = sanitize_text_field($_POST['name']);
+            $power = intval($_POST['power']);
+            $price = intval($_POST['price']);
+            $health = intval($_POST['health']); // Add the health value
 
-                $wpdb->insert(
-                    $table_name,
-                    array(
-                        'name' => $name,
-                        'power' => $power,
-                        'price' => $price,
-                    )
-                );
+            $wpdb->insert(
+                $table_name,
+                array(
+                    'name' => $name,
+                    'power' => $power,
+                    'price' => $price,
+                    'health' => $health, // Insert the health value into the database
+                )
+            );
 
-                echo '<div class="updated"><p>Weapon added successfully!</p></div>';
-            }
+            echo '<div class="updated"><p>Weapon added successfully!</p></div>';
         }
-
     }
 
+
     // Display the form for weapon creation
+// Display the form for weapon creation
     echo '<div class="wrap">';
     echo '<h2 class="text-danger">Créez Votre Arme</h2>';
     echo '<form method="post">';
 
-    echo '<label for="name">Name: </label>';
+    echo '<label for="name">Nom: </label>';
     echo '<input type="text" name="name" required>';
     echo '<br>';
     echo '<br>';
-    echo '<label for="power">Power: </label>';
+    echo '<label for="power">Puissance: </label>';
     echo '<input type="number" name="power" required>';
     echo '<br>';
     echo '<br>';
-    echo '<label for="price" class="text-white">Price: </label>';
+    echo '<label for="price" class="text-white">Prix: </label>';
     echo '<input type="number" name="price" required>';
     echo '<br>';
     echo '<br>';
-    echo '<input type="submit" name="submit_weapon" class="button button-primary" value="Create Weapon">';
+    echo '<label for="health" class="text-white">Santé: </label>';
+    echo '<input type="number" name="health" required>'; // Add the health input field
+    echo '<br>';
+    echo '<br>';
+    echo '<input type="submit" name="submit_weapon" class="button button-primary" value="Créer arme">';
     echo '</form>';
     echo '</div>';
+
 
     // Display all weapons in cards
     global $wpdb;
     $table_name = $wpdb->prefix . 'shop';
     $weapons = $wpdb->get_results("SELECT * FROM $table_name");
 
-    echo '<h2>All Weapons</h2>';
+    echo '<h1>Toutes les armes</h1>';
     echo '<div class="weapons-container">';
     foreach ($weapons as $weapon) {
         echo '<div class="weapon-card" style="padding: 3px; border: 1px solid black; border-radius: 5px; width: 20%" >';
         echo '<p style="text-align: center; font-size: 15px"><strong>Nom: </strong>' . esc_html($weapon->name) . '</p>';  // Use esc_html to sanitize the output
         echo '<p style="text-align: center"><strong>Puissance:</strong> ' . $weapon->power . '</p>';
         echo '<p style="text-align: center"><strong>Prix:  </strong>'. $weapon->price . '</p>';
+        echo '<p style="text-align: center"><strong>Vie:  </strong>'. $weapon->health . '</p>';
         echo '</div>';
     }
     echo '</div>';
